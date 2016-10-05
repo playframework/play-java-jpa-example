@@ -12,3 +12,9 @@ before_cache:
   - rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
   # Delete all ivydata files since ivy touches them on each build
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/d2c8a242a2615f659595
+    on_success: always
+    on_failure: always
