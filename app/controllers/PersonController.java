@@ -8,7 +8,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.util.List;
 
 import static play.libs.Json.toJson;
