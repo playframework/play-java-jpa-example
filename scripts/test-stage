@@ -20,11 +20,17 @@ app_secret=`openssl rand -base64 32`
 # Start the application in background
 ./target/universal/stage/bin/play-java-jpa-example -Dplay.http.secret.key="${app_secret}" &
 
-success=true
+# Starts with a failed exit_code
+exit_code=1
+retries=0
 
-# And try to access it expecting a success
-curl --connect-timeout 10 --max-time 5 --retry 5 --retry-connrefused --retry-delay 2 --retry-max-time 20 'http://localhost:9000/persons'
-exit_code=$?
+until [[ $retries -ge 5 && $exit_code eq 1 ]]
+do
+    curl 'http://localhost:9000/persons'
+    exit_code=$?
+    retries=$[$retries+1]
+    sleep 5
+done
 
 # Kill it for good
 kill -9 `cat target/universal/stage/RUNNING_PID`
