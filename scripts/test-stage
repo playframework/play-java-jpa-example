@@ -15,7 +15,7 @@ else
 fi
 
 # Have a valid application secret
-app_secret=`openssl rand -base64 32`
+app_secret=$(openssl rand -base64 32)
 
 # Start the application in background
 ./target/universal/stage/bin/play-java-jpa-example -Dplay.http.secret.key="${app_secret}" &
@@ -24,16 +24,16 @@ app_secret=`openssl rand -base64 32`
 exit_code=1
 retries=0
 
-until [[ $retries -ge 5 && $exit_code eq 1 ]]
+until [[ $retries -ge 5 && $exit_code -eq 0 ]]
 do
     curl 'http://localhost:9000/persons'
     exit_code=$?
-    retries=$[$retries+1]
+    retries=$retries+1
     sleep 5
 done
 
 # Kill it for good
-kill -9 `cat target/universal/stage/RUNNING_PID`
+kill -9 "$(cat target/universal/stage/RUNNING_PID)"
 
 # And finally remove leftover pid file
 rm target/universal/stage/RUNNING_PID
