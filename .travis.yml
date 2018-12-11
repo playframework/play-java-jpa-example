@@ -2,7 +2,8 @@ language: scala
 scala: 2.12.8
 before_install:
   - sudo apt-get update
-  - sudo apt-get install -y curl
+  - sudo apt-get -y build-dep curl
+  - wget https://curl.haxx.se/download/curl-7.62.0.tar.gz && tar -xzvf curl-7.62.0.tar.gz && cd curl-7.62.0 && ./configure && make && sudo make install && sudo ldconfig
 jdk:
   - openjdk8
   - openjdk11
