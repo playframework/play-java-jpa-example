@@ -1,5 +1,8 @@
 language: scala
 scala: 2.12.8
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y curl
 jdk:
   - openjdk8
   - openjdk11
